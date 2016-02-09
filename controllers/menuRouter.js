@@ -25,22 +25,26 @@ menuRouter.post('/', function(req, res) {
 
 menuRouter.get('/:id', function(req, res){
   // SHOW
-  res.render('menu/show', {meal: menu.meals[req.params.id-1]});
+  res.render('menu/show', {meal: menu.meals[req.params.id-1], mealId: req.params.id});
 });
 
 menuRouter.get('/:id/edit', function(req, res) {
   // EDIT
-  res.send("menu/edit" + menu.meals[req.params.id-1].name);
+  res.render("menu/edit", {meal: menu.meals[req.params.id-1], mealId: req.params.id});
 });
 
 menuRouter.post('/:id', function(req, res) {
   // UPDATE
-  res.send("menu/update" + menu.meals[req.params.id-1].name);
+  var meal = menu.meals[req.params.id-1];
+  meal.name = req.body.name;
+  meal.course = req.body.course;
+  res.redirect('/menu');
 });
 
-menuRouter.post('/:id', function(req, res) {
+menuRouter.post('/:id/delete', function(req, res) {
   // DELETE
-  res.send("menu/delete" + menu.meals[req.params.id-1].name);
+  menu.meals.splice(req.params.id-1, 1);
+  res.redirect('/menu')
 });
 
 module.exports = menuRouter;

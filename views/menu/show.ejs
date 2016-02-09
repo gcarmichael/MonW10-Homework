@@ -1,2 +1,9 @@
 <h1> <%= meal.name %> </h1>
 Course: <%= meal.course %>
+<br>
+<a href="/menu/<%= mealId %>/edit">Edit</a>
+
+<form action="/menu/<%= mealId %>/delete" method="post" name="deleteForm">
+  <input type="hidden" name="meal[id]" value="<%= mealId %>">
+  <button type="submit">Delete Meal</button>
+</form>
